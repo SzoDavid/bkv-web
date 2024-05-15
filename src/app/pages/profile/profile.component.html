@@ -1,9 +1,7 @@
 <div>
-    <h1>Profil</h1>
     <p>E-mail</p><p>{{user.email}}</p>
     <label for="full_name">Teljes név</label><br>
     <input id="full_name" type="text" [(ngModel)]="name" [value]="name"><br>
     <button (click)="onSave()">Mentés</button><br>
     <button>Kijelentkezés</button><br>
 </div>
-

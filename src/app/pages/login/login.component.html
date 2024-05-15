@@ -1,0 +1,12 @@
+<div>
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <label for="email">E-mail:</label>
+        <input id="email" type="email" formControlName="email"><br>
+
+        <label for="password">Password:</label>
+        <input id="password" type="password" formControlName="password"><br>
+
+        <button type="submit">Bejelentkezés</button>
+        <button [routerLink]="'/signup'">Regisztráció</button>
+    </form>
+</div>

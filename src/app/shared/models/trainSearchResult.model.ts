@@ -1,12 +1,12 @@
 import {Train} from "./train.model";
-import {TimeTableElement} from "./timeTableElement.model";
+import {TimetableElement} from "./timetableElement.model";
 
 export class TrainSearchResult {
     private _train: Train;
-    private _start: TimeTableElement;
-    private _destination: TimeTableElement;
+    private _start: TimetableElement;
+    private _destination: TimetableElement;
 
-    constructor(train: Train, start: TimeTableElement, destination: TimeTableElement) {
+    constructor(train: Train, start: TimetableElement, destination: TimetableElement) {
         this._train = train;
         this._start = start;
         this._destination = destination;
@@ -20,19 +20,19 @@ export class TrainSearchResult {
         this._train = value;
     }
 
-    get start(): TimeTableElement {
+    get start(): TimetableElement {
         return this._start;
     }
 
-    set start(value: TimeTableElement) {
+    set start(value: TimetableElement) {
         this._start = value;
     }
 
-    get destination(): TimeTableElement {
+    get destination(): TimetableElement {
         return this._destination;
     }
 
-    set destination(value: TimeTableElement) {
+    set destination(value: TimetableElement) {
         this._destination = value;
     }
 }

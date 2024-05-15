@@ -1,6 +1,6 @@
 import {Station} from "./station.model";
 
-export class TimeTableElement {
+export class TimetableElement {
     private _station: Station;
     private _departureTime: Date;
 
@@ -8,7 +8,7 @@ export class TimeTableElement {
         this._station = station;
         this._departureTime = departureTime;
     }
-    
+
     get station(): Station {
         return this._station;
     }

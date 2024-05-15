@@ -1,13 +1,20 @@
-<h1>Keresés</h1>
+<div>
+    <h1>Keresés</h1>
+    <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+        <label for="from_station">Honnan</label>
+        <select id="from_station" formControlName="fromStation">
+            <option *ngFor="let fromStation of stations" [value]="fromStation">{{ fromStation.name }}</option>
+        </select><br>
 
-<label for="from_station">Honnan</label>
-<select id="from_station" [(ngModel)]="fromStation">
-    <option *ngFor="let fromStation of stations" [ngValue]="fromStation">{{fromStation.name}}</option>
-</select><br>
+        <label for="to_station">Hova</label>
+        <select id="to_station" formControlName="toStation">
+            <option *ngFor="let toStation of stations" [value]="toStation">{{ toStation.name }}</option>
+        </select><br>
 
-<label for="to_station">Hova</label>
-<select id="to_station" [(ngModel)]="toStation">
-    <option *ngFor="let toStation of stations" [ngValue]="toStation">{{toStation.name}}</option>
-</select><br>
+        <label for="date">Mikor</label>
+        <input id="date" type="date" formControlName="searchDate"><br>
 
-<button (click)="onSearch()">Keresés</button>
+        <button type="submit">Keresés</button>
+    </form>
+</div>
+

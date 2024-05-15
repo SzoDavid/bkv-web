@@ -1,5 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {Station} from "../../../shared/models/station.model";
+import {SearchParameters} from "../../../shared/models/searchParameters.model";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import moment from "moment";
 
 @Component({
     selector: 'app-search-box',
@@ -7,17 +10,24 @@ import {Station} from "../../../shared/models/station.model";
     styleUrl: './search-box.component.scss'
 })
 export class SearchBoxComponent {
-    stations: Array<Station>;
-    fromStation: Station
-    toStation: Station;
+    @Output() searchParameters: EventEmitter<SearchParameters> = new EventEmitter();
+    stations: Array<Station> = new Array<Station>();
+    searchForm: FormGroup;
 
-    constructor() {
-        this.stations = new Array<Station>();
-
+    constructor(private fb: FormBuilder) {
         this.loadData();
 
-        this.fromStation = this.stations[0];
-        this.toStation = this.stations[0];
+        this.searchForm = this.fb.group(
+            {
+                fromStation: [this.stations[0], [Validators.required]],
+                toStation: [this.stations[0], [Validators.required]],
+                searchDate: [new Date().toISOString().substring(0, 10), [Validators.required, this.validateDate]],
+            });
+    }
+
+    validateDate(control: any) {
+        const isValid = moment(control.value, 'YYYY-MM-DD').isValid();
+        return isValid ? null : {invalidDate: true};
     }
 
     loadData() {
@@ -26,7 +36,19 @@ export class SearchBoxComponent {
         }
     }
 
+    getFieldValue(field: string): any {
+        return this.searchForm.get(field)?.value;
+    }
+
     onSearch() {
-        console.log({from: this.fromStation, to: this.toStation});
+        if (this.searchForm.invalid) return;
+
+        this.searchParameters.emit(
+            new SearchParameters(
+                this.getFieldValue('fromStation'),
+                this.getFieldValue('toStation'),
+                new Date(this.getFieldValue('searchDate'))
+            )
+        );
     }
 }

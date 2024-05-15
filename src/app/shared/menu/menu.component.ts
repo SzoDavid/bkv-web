@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
     selector: 'app-menu',
@@ -7,8 +7,9 @@ import {Component, EventEmitter, Output} from '@angular/core';
 })
 export class MenuComponent {
     @Output() selectedPage: EventEmitter<string> = new EventEmitter();
+    @Input() currentPage!: string;
 
-    menuSwitch(pageValue: string) {
-        this.selectedPage.emit(pageValue);
+    menuSwitch() {
+        this.selectedPage.emit(this.currentPage);
     }
 }

@@ -1,6 +1,8 @@
-<select #pageValue (change)="menuSwitch(pageValue.value)">
-    <option value="main">Főoldal</option>
+<select [(ngModel)]="currentPage" (change)="menuSwitch()">
+    <option value="">Főoldal</option>
     <option value="search">Keresés</option>
     <option value="reservations">Foglalások</option>
     <option value="profile">Profil</option>
+    <option value="login">Bejelentkezés</option>
+    <option value="signup">Regisztráció</option>
 </select>

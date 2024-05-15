@@ -1,1 +1,22 @@
-<router-outlet />
+<app-menu (selectedPage)="changePage($event)"></app-menu>
+<ng-container [ngSwitch]="page">
+    <ng-container *ngSwitchCase="'main'">
+        <div class="main_component">
+            <app-main></app-main>
+        </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="'search'">
+        <app-search></app-search>
+    </ng-container>
+    <ng-container *ngSwitchCase="'reservations'">
+        <app-reservations></app-reservations>
+    </ng-container>
+    <ng-container *ngSwitchCase="'profile'">
+        <app-profile></app-profile>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+        <p>Ezt az oldalt elvitték az axerwáliakok</p>
+    </ng-container>
+</ng-container>
+
+<!--<router-outlet />-->

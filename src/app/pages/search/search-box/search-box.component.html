@@ -1,0 +1,13 @@
+<h1>Keresés</h1>
+
+<label for="from_station">Honnan</label>
+<select id="from_station" [(ngModel)]="fromStation">
+    <option *ngFor="let fromStation of stations" [ngValue]="fromStation">{{fromStation.name}}</option>
+</select><br>
+
+<label for="to_station">Hova</label>
+<select id="to_station" [(ngModel)]="toStation">
+    <option *ngFor="let toStation of stations" [ngValue]="toStation">{{toStation.name}}</option>
+</select><br>
+
+<button (click)="onSearch()">Keresés</button>

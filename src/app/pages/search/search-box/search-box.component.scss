@@ -1,0 +1,38 @@
+.container {
+    padding-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+h1 {
+    padding-left: 15px;
+}
+
+.div-flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+}
+
+form div {
+    padding: 5px 5px 5px 5px;
+}
+
+form {
+    display: inline-grid;
+    align-self: center;
+    width: 100%;
+}
+
+.buttons {
+    padding: 5px;
+}
+
+@media screen and (max-width: 800px) {
+    .container {
+        width: 90%;
+    }
+}

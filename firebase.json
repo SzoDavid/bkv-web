@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/bkv-tickets",
+    "public": "dist/bkv-tickets/browser",
     "ignore": [
       "firebase.json",
       "**/.*",

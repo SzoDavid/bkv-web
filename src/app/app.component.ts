@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {NavigationEnd, Router} from "@angular/router";
-import {filter} from "rxjs";
+import {Router} from "@angular/router";
 import {AuthService} from "./shared/services/auth.service";
+import {MatSidenav} from "@angular/material/sidenav";
 
 @Component({
     selector: 'app-root',
@@ -9,24 +9,30 @@ import {AuthService} from "./shared/services/auth.service";
     styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
-    page = '';
     routes: Array<string> = new Array<string>();
+    loggedIn = false;
 
     constructor(private _router: Router, private _authService: AuthService) {}
 
     ngOnInit() {
         this.routes = this._router.config.map(conf => conf.path) as string[];
 
-        this._router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: any) => {
-            const currentPage = (event.urlAfterRedirects as string).split('/')[1] as string;
-            if (this.routes.includes(currentPage)) {
-                this.page = currentPage;
-            }
-        });
+        this._authService.isLoggedIn().subscribe(isLoggedIn => {
+            this.loggedIn = isLoggedIn;
+        })
     }
 
     changePage(selectedPage: string) {
-        // this.page = selectedPage;
         this._router.navigateByUrl(selectedPage);
+    }
+
+    onToggleSidenav(sidenav: MatSidenav) {
+        sidenav.toggle();
+    }
+
+    onSidenavClose(event: any, sidenav: MatSidenav) {
+        if (event === true) {
+            sidenav.close();
+        }
     }
 }

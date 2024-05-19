@@ -10,6 +10,7 @@ import {AuthService} from "../../shared/services/auth.service";
 })
 export class LoginComponent {
     loginForm: FormGroup;
+    loading = false;
 
     constructor(private _router: Router, private _fb: FormBuilder, private _authService: AuthService) {
         this.loginForm = this._fb.group(
@@ -26,8 +27,10 @@ export class LoginComponent {
     login() {
         if (this.loginForm.invalid) return;
 
-        this._authService.login(this.getFieldValue('email'), this.getFieldValue('password')).then(cred => {
-            console.log(cred);
+        this.loading = true;
+
+        this._authService.login(this.getFieldValue('email'), this.getFieldValue('password')).then(_ => {
+            this.loading = false;
             this._router.navigateByUrl('/');
         }).catch(error => {
             console.error(error);

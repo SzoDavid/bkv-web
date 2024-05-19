@@ -1,19 +1,34 @@
-<div>
-    <form [formGroup]="signUpForm" (ngSubmit)="onSignup()">
-        <label for="full_name">Teljes név:</label>
-        <input id="full_name" type="text" formControlName="fullName"><br>
+<span class="loading-indicator" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+</span>
 
-        <label for="email">E-mail:</label>
-        <input id="email" type="email" formControlName="email"><br>
+<div class="main_component">
+    <div class="div-flex">
+        <form [formGroup]="signUpForm" (ngSubmit)="onSignup()">
+            <mat-form-field>
+                <mat-label>Teljes név:</mat-label>
+                <input matInput type="text" formControlName="fullName">
+            </mat-form-field>
 
-        <label for="password">Password:</label>
-        <input id="password" type="password" formControlName="password"><br>
+            <mat-form-field>
+                <mat-label>E-mail:</mat-label>
+                <input matInput type="email" formControlName="email">
+            </mat-form-field>
 
-        <label for="password_again">Confirm password:</label>
-        <input id="password_again" type="password" formControlName="passwordAgain"><br>
+            <mat-form-field>
+                <mat-label>Jelszó:</mat-label>
+                <input matInput type="password" formControlName="password">
+            </mat-form-field>
 
-        <button type="submit">Regisztráció</button>
-        <button [routerLink]="'/login'">Bejelentkező</button>
-    </form>
-
+            <mat-form-field>
+                <mat-label>Jelszó mégegyszer:</mat-label>
+                <input matInput type="password" formControlName="passwordAgain">
+            </mat-form-field>
+            <p>Az email legyen legalább 8 karakter hosszú, valamint tartalmazzon kis- és nagy betűt, illetve számjegyet!</p>
+            <div>
+                <span class="buttons"><button mat-raised-button color="primary" type="submit">Regisztráció</button></span>
+                <span class="buttons"><button mat-raised-button [routerLink]="'/login'">Bejelentkezés</button></span>
+            </div>
+        </form>
+    </div>
 </div>

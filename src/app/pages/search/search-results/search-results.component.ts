@@ -39,15 +39,11 @@ export class SearchResultsComponent implements OnChanges {
                         const startIndex = stations.findIndex(stop => stop.station?.id === params.from!.id);
                         const destinationIndex = stations.findIndex(stop => stop.station?.id === params.to!.id);
 
-                        console.log(line);
-
                         this._trainService.getAllByRailLineDirectionAndDate(line, startIndex < destinationIndex, params.date!).subscribe(trains => {
                             for (let train of trains) {
                                 train.line?.reference?.get().then(lineDoc => {
-                                    console.log(train);
                                     train.line = RailLineService.parseRailLine(lineDoc);
                                     TimetableService.calculate(train, params.from!, params.to!).then(timetable => {
-                                        console.log(timetable);
                                         this.searchResults.push(new TrainSearchResult(train, timetable.at(0)!, timetable.at(timetable.length - 1)!));
                                     });
                                 }).catch(error => {

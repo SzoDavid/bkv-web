@@ -1,12 +1,22 @@
-<div>
-    <form [formGroup]="loginForm" (ngSubmit)="login()">
-        <label for="email">E-mail:</label>
-        <input id="email" type="email" formControlName="email"><br>
+<span class="loading-indicator" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+</span>
 
-        <label for="password">Password:</label>
-        <input id="password" type="password" formControlName="password"><br>
-
-        <button type="submit">Bejelentkezés</button>
-        <button [routerLink]="'/signup'">Regisztráció</button>
-    </form>
+<div class="main_component">
+    <div class="div-flex">
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+            <mat-form-field>
+                <mat-label>E-mail:</mat-label>
+                <input matInput id="email" type="email" formControlName="email">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Jelszó:</mat-label>
+                <input matInput id="password" type="password" formControlName="password">
+            </mat-form-field>
+            <div>
+                <span class="buttons"><button mat-raised-button color="primary" type="submit">Bejelentkezés</button></span>
+                <span class="buttons"><button mat-raised-button [routerLink]="'/signup'">Regisztráció</button></span>
+            </div>
+        </form>
+    </div>
 </div>

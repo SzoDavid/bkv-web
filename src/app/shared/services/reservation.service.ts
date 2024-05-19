@@ -150,7 +150,6 @@ export class ReservationService {
 
         if (!reservation.id || !reservation.from!.id || !reservation.from!.name || !reservation.to!.id || !reservation.to!.name ||
             !reservation.train!.id || !reservation.train!.name || !reservation.train!.departure || !reservation.user!.reference) {
-            console.log(reservation);
             throw new Error('Failed to parse reservation');
         }
 

@@ -18,7 +18,6 @@ export class StationService {
             .pipe(
                 map(snapshot => {
                     if (snapshot.empty) {
-                        console.log('Returned query is empty');
                         return [];
                     }
 

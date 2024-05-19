@@ -5,10 +5,7 @@ import {TimetableElement} from "../models/timetableElement.model";
 export class TimetableService {
     static calculate(train: Train, start: Station, destination: Station): Promise<TimetableElement[]> {
         return new Promise<TimetableElement[]>((resolve, reject) => {
-            console.log(train);
             const stations = train.line!.stations;
-            console.log(stations);
-
             const timetable: TimetableElement[] = [];
 
             const startIndex = stations.findIndex(stop => stop.station?.id === start.id);
@@ -43,8 +40,6 @@ export class TimetableService {
 
                 for (let i = startIndex; i >= destinationIndex; i--) {
                     const stop = stations[i];
-                    console.log(stop);
-                    console.log(i);
 
                     if (!stop || stop.durationMinutes === undefined || !stop.station) {
                         reject(new Error('Failed to parse timetable: stop is undefined'));

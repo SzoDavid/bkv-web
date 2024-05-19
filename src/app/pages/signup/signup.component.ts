@@ -13,6 +13,7 @@ import {UserService} from "../../shared/services/user.service";
 })
 export class SignupComponent {
     signUpForm: FormGroup;
+    loading = false;
 
     constructor(private _fb: FormBuilder,
                 private _authService: AuthService,
@@ -41,8 +42,9 @@ export class SignupComponent {
     onSignup() {
         if (this.signUpForm.invalid) return;
 
+        this.loading = true;
         this._authService.signup(this.getFieldValue('email'),
-                                 this.getFieldValue('password'))
+            this.getFieldValue('password'))
             .then(cred => {
                 const user = new User(
                     undefined,
@@ -53,11 +55,23 @@ export class SignupComponent {
                 );
 
                 this._userService.create(user).then(_ => {
+                    this.loading = false;
                     this._router.navigateByUrl('/');
                 }).catch(error => {
+                    this.loading = false;
                     console.error(error);
                 })
             }).catch(error => {
+                this.loading = false;
+                if (error.code === 'auth/invalid-email') {
+                    alert('A megadott email cím helytelen!');
+                    return;
+                }
+                if (error.code === 'auth/email-already-in-use') {
+                    alert('A megadott email cím foglalt!');
+                    return;
+                }
+                alert('Sikertelen regisztráció');
                 console.error(error);
             });
     }

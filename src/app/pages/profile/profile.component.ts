@@ -34,8 +34,10 @@ export class ProfileComponent {
     onSave() {
         this.user.name = this.name;
         this._userService.update(this.user).then(_ => {
+            alert('Mentés sikeres');
             this.loadData();
-            console.log('yippee');
+        }).catch(error => {
+            console.error(error);
         });
     }
 

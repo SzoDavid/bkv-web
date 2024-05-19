@@ -1,7 +1,17 @@
-<div *ngFor="let reservation of reservations">
-    <p>Train: {{reservation.train.name}}</p>
-    <p>From: {{reservation.from.name}}</p>
-    <p>To: {{reservation.to.name}}</p>
-    <p>Departure: {{reservation.train.departure}}</p>
-    <button [routerLink]="['/reservations/' + reservation.id]">Details</button>
+<div class="main_component">
+    <h1>Foglalások</h1>
+    <hr>
+    <mat-card *ngFor="let reservation of reservations">
+        <mat-card-header>
+            <mat-card-title>
+                {{ reservation.from.name }} -> {{ reservation.to.name }}
+            </mat-card-title>
+            <mat-card-subtitle>
+                {{ (reservation.train.departure! | dateFormat) ?? '' }}
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-actions align="end">
+            <button mat-raised-button color="primary" [routerLink]="['/reservations/' + reservation.id]">Details</button>
+        </mat-card-actions>
+    </mat-card>
 </div>

@@ -1,7 +1,15 @@
-<div>
-    <p>E-mail</p><p>{{user.email}}</p>
-    <label for="full_name">Teljes név</label><br>
-    <input id="full_name" type="text" [(ngModel)]="name" [value]="name"><br>
-    <button (click)="onSave()">Mentés</button><br>
-    <button (click)="onLogout()">Kijelentkezés</button><br>
+<div class="main_component">
+    <div class="content">
+        <h1>Profil</h1>
+        <hr>
+        <p>E-mail: {{user.email}}</p>
+        <mat-form-field>
+            <mat-label>Teljes név:</mat-label>
+            <input matInput type="text" [(ngModel)]="name" [value]="name">
+        </mat-form-field>
+        <div>
+            <button mat-raised-button color="primary" (click)="onSave()">Mentés</button>
+            <button mat-raised-button (click)="onLogout()">Kijelentkezés</button>
+        </div>
+    </div>
 </div>

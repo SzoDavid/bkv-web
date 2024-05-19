@@ -9,6 +9,13 @@ import {environment} from "../environments/environment";
 import {AngularFireModule} from "@angular/fire/compat";
 import {AngularFireAuthModule} from "@angular/fire/compat/auth";
 import {AngularFirestoreModule} from "@angular/fire/compat/firestore";
+import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
+import {FlexLayoutModule} from "@angular/flex-layout";
+import {MatListItem, MatNavList} from "@angular/material/list";
 
 @NgModule({
     declarations: [
@@ -21,9 +28,18 @@ import {AngularFirestoreModule} from "@angular/fire/compat/firestore";
         FormsModule,
         AngularFireModule.initializeApp(environment.firebaseConfig),
         AngularFireAuthModule,
-        AngularFirestoreModule
+        AngularFirestoreModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatIconModule,
+        FlexLayoutModule,
+        MatNavList,
+        MatListItem
     ],
-    providers: [],
+    providers: [
+        provideAnimationsAsync()
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

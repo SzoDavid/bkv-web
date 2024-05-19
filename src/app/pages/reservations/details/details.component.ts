@@ -11,6 +11,7 @@ import {TimetableElement} from "../../../shared/models/timetableElement.model";
     styleUrl: './details.component.scss'
 })
 export class DetailsComponent implements OnInit {
+    displayedColumns: string[] = ['station', 'depart'];
     private _reservationId: string = '';
     reservation?: Reservation;
     timetable = new Array<TimetableElement>();
@@ -30,8 +31,6 @@ export class DetailsComponent implements OnInit {
     loadData() {
         this._reservationService.getById(this._reservationId).subscribe(reservation => {
             this.reservation = reservation;
-
-            console.log(reservation);
 
             TimetableService.calculate(reservation.train, reservation.from, reservation.to).then(timetable => {
                 this.timetable = timetable;

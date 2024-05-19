@@ -1,20 +1,27 @@
-<div>
+<div class="container">
     <h1>Keresés</h1>
-    <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
-        <label for="from_station">Honnan</label>
-        <select id="from_station" formControlName="fromStation">
-            <option *ngFor="let fromStation of stations" [value]="fromStation.id">{{ fromStation.name }}</option>
-        </select><br>
-
-        <label for="to_station">Hova</label>
-        <select id="to_station" formControlName="toStation">
-            <option *ngFor="let toStation of stations" [value]="toStation.id">{{ toStation.name }}</option>
-        </select><br>
-
-        <label for="date">Mikor</label>
-        <input id="date" type="date" formControlName="searchDate"><br>
-
-        <button type="submit">Keresés</button>
-    </form>
+    <hr>
+    <div class="div-flex">
+        <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+            <mat-form-field>
+                <mat-label>Honnan</mat-label>
+                <mat-select formControlName="fromStation">
+                    <mat-option *ngFor="let fromStation of stations" [value]="fromStation.id">{{ fromStation.name }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Hova</mat-label>
+                <mat-select formControlName="toStation">
+                    <mat-option *ngFor="let toStation of stations" [value]="toStation.id">{{ toStation.name }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Mikor</mat-label>
+                <input matInput type="date" formControlName="searchDate">
+            </mat-form-field>
+            <span class="buttons"><button mat-raised-button color="primary" type="submit">Keresés</button></span>
+        </form>
+    </div>
+    <hr>
 </div>
 

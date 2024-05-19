@@ -3,12 +3,12 @@
     <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
         <label for="from_station">Honnan</label>
         <select id="from_station" formControlName="fromStation">
-            <option *ngFor="let fromStation of stations" [value]="fromStation">{{ fromStation.name }}</option>
+            <option *ngFor="let fromStation of stations" [value]="fromStation.id">{{ fromStation.name }}</option>
         </select><br>
 
         <label for="to_station">Hova</label>
         <select id="to_station" formControlName="toStation">
-            <option *ngFor="let toStation of stations" [value]="toStation">{{ toStation.name }}</option>
+            <option *ngFor="let toStation of stations" [value]="toStation.id">{{ toStation.name }}</option>
         </select><br>
 
         <label for="date">Mikor</label>

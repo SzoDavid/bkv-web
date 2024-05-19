@@ -1,1 +1,7 @@
-<p *ngFor="let reservation of reservations">{{ reservation.id }}</p>
+<div *ngFor="let reservation of reservations">
+    <p>Train: {{reservation.train.name}}</p>
+    <p>From: {{reservation.from.name}}</p>
+    <p>To: {{reservation.to.name}}</p>
+    <p>Departure: {{reservation.train.departure}}</p>
+    <button [routerLink]="['/reservations/' + reservation.id]">Details</button>
+</div>

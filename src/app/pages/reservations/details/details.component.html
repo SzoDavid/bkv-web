@@ -1,1 +1,19 @@
-<p>details works!</p>
+<div>
+    <p>Honnan: {{reservation?.from?.name}}</p>
+    <p>Hova: {{reservation?.to?.name}}</p>
+    <p>Mikor: {{timetable.at(0)?.departureTime ?? ''}}</p>
+    <p>Név: {{reservation?.user?.name}}</p>
+    <p>Vonat: {{reservation?.train?.name}}</p>
+    <p>Megállók:</p>
+    <table>
+        <tr>
+            <th>Megálló</th>
+            <th>Indulás</th>
+        </tr>
+        <tr *ngFor="let timetableElement of timetable">
+            <td>{{timetableElement?.station?.name}}</td>
+            <td>{{timetableElement?.departureTime}}</td>
+        </tr>
+    </table>
+    <button (click)="onDelete(reservation)">Törlés</button>
+</div>

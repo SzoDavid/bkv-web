@@ -1,18 +1,22 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {authGuard} from "./shared/guards/auth.guard";
 
 const routes: Routes = [
     {
         path: 'search',
-        loadChildren: () => import('./pages/search/search.module').then(m => m.SearchModule)
+        loadChildren: () => import('./pages/search/search.module').then(m => m.SearchModule),
+        canActivate: [authGuard]
     },
     {
         path: 'reservations',
-        loadChildren: () => import('./pages/reservations/reservations.module').then(m => m.ReservationsModule)
+        loadChildren: () => import('./pages/reservations/reservations.module').then(m => m.ReservationsModule),
+        canActivate: [authGuard]
     },
     {
         path: 'profile',
-        loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfileModule)
+        loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfileModule),
+        canActivate: [authGuard]
     },
     {
         path: 'not-found',

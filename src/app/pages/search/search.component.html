@@ -1,2 +1,2 @@
-<app-search-box (searchParameters)="searchTrains($event)" />
-<app-search-results [searchParameters]="searchParameters" />
+<app-search-box (searchParameters)="onSearchParametersChange($event)" />
+<app-search-results [searchParameters]="searchParameters$" />

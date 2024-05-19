@@ -3,47 +3,78 @@ import {Train} from "../models/train.model";
 import {TimetableElement} from "../models/timetableElement.model";
 
 export class TimetableService {
-    static calculate(train: Train, start: Station, destination: Station): TimetableElement[] {
-        const stations = train.line.stations;
-        const timetable: TimetableElement[] = [];
+    static calculate(train: Train, start: Station, destination: Station): Promise<TimetableElement[]> {
+        return new Promise<TimetableElement[]>((resolve, reject) => {
+            console.log(train);
+            const stations = train.line!.stations;
+            console.log(stations);
 
-        const startIndex = stations.findIndex(stop => stop.station === start);
-        const destinationIndex = stations.findIndex(stop => stop.station === destination);
+            const timetable: TimetableElement[] = [];
 
-        if (startIndex < destinationIndex !== train.ascendingOrder) {
-            throw new Error('Invalid train direction');
-        }
+            const startIndex = stations.findIndex(stop => stop.station?.id === start.id);
+            const destinationIndex = stations.findIndex(stop => stop.station?.id === destination.id);
 
-        if (train.ascendingOrder) {
-            for (let i = startIndex; i <= destinationIndex; i++) {
-                const stop = stations[i];
-
-                const date = new Date(train.departure);
-                date.setMinutes(date.getMinutes() + stop.durationMinutes);
-
-                timetable.push(new TimetableElement(stop.station, date));
+            if (startIndex < destinationIndex !== train.ascendingOrder) {
+                reject(new Error('Failed to parse timetable: Invalid train direction'));
+                return;
             }
-        } else {
-            const lastStopTime = stations[stations.length - 1].durationMinutes;
-            for (let i = startIndex; i >= destinationIndex; i--) {
-                const stop = stations[i];
 
-                const date = new Date(train.departure);
-                date.setMinutes(date.getMinutes() + lastStopTime - stop.durationMinutes);
+            if (train.ascendingOrder) {
+                for (let i = startIndex; i <= destinationIndex; i++) {
+                    const stop = stations[i];
 
-                timetable.push(new TimetableElement(stop.station, date));
+                    if (!stop || stop.durationMinutes === undefined || !stop.station) {
+                        reject(new Error('Failed to parse timetable: stop is undefined'));
+                        return;
+                    }
+
+                    const date = new Date(train.departure!);
+                    date.setMinutes(date.getMinutes() + stop.durationMinutes);
+
+                    timetable.push(new TimetableElement(stop.station, date));
+                }
+            } else {
+                const lastStopTime = stations[stations.length - 1].durationMinutes;
+
+                if (!lastStopTime) {
+                    reject(new Error('Failed to parse timetable: lastStopTime is undefined'));
+                    return;
+                }
+
+                for (let i = startIndex; i >= destinationIndex; i--) {
+                    const stop = stations[i];
+                    console.log(stop);
+                    console.log(i);
+
+                    if (!stop || stop.durationMinutes === undefined || !stop.station) {
+                        reject(new Error('Failed to parse timetable: stop is undefined'));
+                        return;
+                    }
+
+                    const date = new Date(train.departure!);
+                    date.setMinutes(date.getMinutes() + lastStopTime - stop.durationMinutes);
+
+                    timetable.push(new TimetableElement(stop.station, date));
+                }
             }
-        }
-
-        return timetable;
+            resolve(timetable);
+            return;
+        });
     }
 
-    static calculateForTrain(train: Train): TimetableElement[] {
-        const stations = train.line.stations;
-        const startStation = stations[train.ascendingOrder ? 0 : stations.length - 1].station;
-        const destinationStation = stations[train.ascendingOrder ? stations.length - 1 : 0].station;
+    static calculateForTrain(train: Train): Promise<TimetableElement[]> {
+        return new Promise<TimetableElement[]>((resolve, reject) => {
+            const stations = train.line!.stations;
+            const startStation = stations[train.ascendingOrder ? 0 : stations.length - 1].station;
+            const destinationStation = stations[train.ascendingOrder ? stations.length - 1 : 0].station;
 
-        return this.calculate(train, startStation, destinationStation);
+            if (!startStation || !destinationStation) {
+                reject(new Error('Failed to parse timetable:  Start and end stations are undefined'));
+                return;
+            }
 
+            resolve(this.calculate(train, startStation, destinationStation));
+            return;
+        });
     }
 }

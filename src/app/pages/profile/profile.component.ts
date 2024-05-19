@@ -1,5 +1,8 @@
 import {Component} from '@angular/core';
 import {User} from "../../shared/models/user.model";
+import {AuthService} from "../../shared/services/auth.service";
+import {Router} from "@angular/router";
+import {UserService} from "../../shared/services/user.service";
 
 @Component({
     selector: 'app-profile',
@@ -10,13 +13,37 @@ export class ProfileComponent {
     user: User;
     name: string;
 
-    constructor() {
-        this.user = new User("id", "authId", "email", "name");
+    constructor(private _router: Router, private _authService: AuthService, private _userService: UserService) {
+        this.user = new User();
         this.name = this.user.name;
+
+        this.loadData();
+    }
+
+    loadData() {
+        this._authService.getUser().subscribe(user => {
+            if (!user) return;
+            this._userService.getByAuthId(user.uid).subscribe(user => {
+                if (!user) return;
+                this.user = user;
+                this.name = this.user.name;
+            });
+        });
     }
 
     onSave() {
         this.user.name = this.name;
-        console.log(this.user);
+        this._userService.update(this.user).then(_ => {
+            this.loadData();
+            console.log('yippee');
+        });
+    }
+
+    onLogout() {
+        this._authService.logout().then(_ => {
+            this._router.navigateByUrl('/login');
+        }).catch(error => {
+            console.error(error);
+        });
     }
 }

@@ -1,15 +1,15 @@
 import {Station} from "./station.model";
 
 export class Stop {
-    private _station: Station;
-    private _durationMinutes: number;
+    private _station?: Station;
+    private _durationMinutes?: number;
 
-    constructor(station: Station, durationMinutes: number) {
+    constructor(station?: Station, durationMinutes?: number) {
         this._station = station;
         this._durationMinutes = durationMinutes;
     }
 
-    get station(): Station {
+    get station(): Station|undefined {
         return this._station;
     }
 
@@ -17,7 +17,7 @@ export class Stop {
         this._station = value;
     }
 
-    get durationMinutes(): number {
+    get durationMinutes(): number|undefined {
         return this._durationMinutes;
     }
 

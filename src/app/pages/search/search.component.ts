@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {SearchParameters} from "../../shared/models/searchParameters.model";
+import {BehaviorSubject} from "rxjs";
 
 @Component({
     selector: 'app-search',
@@ -7,9 +8,10 @@ import {SearchParameters} from "../../shared/models/searchParameters.model";
     styleUrl: './search.component.scss'
 })
 export class SearchComponent {
-    searchParameters: SearchParameters|undefined;
+    private searchParametersSubject = new BehaviorSubject<SearchParameters>(new SearchParameters());
+    searchParameters$ = this.searchParametersSubject.asObservable();
 
-    searchTrains(params: SearchParameters) {
-        this.searchParameters = params;
+    onSearchParametersChange(params: SearchParameters) {
+        this.searchParametersSubject.next(params);
     }
 }

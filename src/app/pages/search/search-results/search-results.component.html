@@ -1,3 +1,7 @@
-<div>
-    <p>search-results works!</p>
+<div *ngFor="let train of searchResults">
+    <p>Honnan: {{train.start.station.name}}</p>
+    <p>Hova: {{train.destination.station.name}}</p>
+    <p>Indul: {{train.start.departureTime}}</p>
+    <p>Érkezik: {{train.destination.departureTime}}</p>
+    <button (click)="onAddClick(train)">Foglalás</button>
 </div>

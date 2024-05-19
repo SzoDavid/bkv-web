@@ -3,6 +3,8 @@ import {Station} from "../../../shared/models/station.model";
 import {SearchParameters} from "../../../shared/models/searchParameters.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import moment from "moment";
+import {StationService} from "../../../shared/services/station.service";
+import {DifferentStationsValidator} from "../../../validators/different-stations.validator";
 
 @Component({
     selector: 'app-search-box',
@@ -14,7 +16,7 @@ export class SearchBoxComponent {
     stations: Array<Station> = new Array<Station>();
     searchForm: FormGroup;
 
-    constructor(private fb: FormBuilder) {
+    constructor(private fb: FormBuilder, private _stationService: StationService) {
         this.loadData();
 
         this.searchForm = this.fb.group(
@@ -22,6 +24,8 @@ export class SearchBoxComponent {
                 fromStation: [this.stations[0], [Validators.required]],
                 toStation: [this.stations[0], [Validators.required]],
                 searchDate: [new Date().toISOString().substring(0, 10), [Validators.required, this.validateDate]],
+            }, {
+                validators: DifferentStationsValidator.differentStations('fromStation', 'toStation')
             });
     }
 
@@ -31,9 +35,12 @@ export class SearchBoxComponent {
     }
 
     loadData() {
-        for (let i = 0; i < 10; i++) {
-            this.stations.push(new Station('id' + i, 'station' + i));
-        }
+        this._stationService.getAll().subscribe(stations => {
+            if (stations) this.stations = stations;
+
+            this.searchForm.get('fromStation')?.setValue(stations[0].id);
+            this.searchForm.get('toStation')?.setValue(stations[0].id);
+        })
     }
 
     getFieldValue(field: string): any {
@@ -45,8 +52,8 @@ export class SearchBoxComponent {
 
         this.searchParameters.emit(
             new SearchParameters(
-                this.getFieldValue('fromStation'),
-                this.getFieldValue('toStation'),
+                this.stations.at(this.stations.findIndex(station => station.id === this.getFieldValue('fromStation'))),
+                this.stations.at(this.stations.findIndex(station => station.id === this.getFieldValue('toStation'))),
                 new Date(this.getFieldValue('searchDate'))
             )
         );

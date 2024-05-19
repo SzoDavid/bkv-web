@@ -1,13 +1,16 @@
 import {RailLine} from "./railLine.model";
+import {DocumentReference} from "@angular/fire/compat/firestore";
 
 export class Train {
-    private _id: string;
-    private _name: string;
-    private _line: RailLine;
-    private _ascendingOrder: boolean;
-    private _departure: Date;
+    private _reference?: DocumentReference;
+    private _id?: string;
+    private _name?: string;
+    private _line?: RailLine;
+    private _ascendingOrder?: boolean;
+    private _departure?: Date;
 
-    constructor(id: string, name: string, line: RailLine, ascendingOrder: boolean, departure: Date) {
+    constructor(reference?: DocumentReference, id?: string, name?: string, line?: RailLine, ascendingOrder?: boolean, departure?: Date) {
+        this._reference = reference;
         this._id = id;
         this._name = name;
         this._line = line;
@@ -15,7 +18,15 @@ export class Train {
         this._departure = departure;
     }
 
-    get id(): string {
+    get reference(): DocumentReference|undefined {
+        return this._reference;
+    }
+
+    set reference(value: DocumentReference) {
+        this._reference = value;
+    }
+
+    get id(): string|undefined {
         return this._id;
     }
 
@@ -23,7 +34,7 @@ export class Train {
         this._id = value;
     }
 
-    get name(): string {
+    get name(): string|undefined {
         return this._name;
     }
 
@@ -31,7 +42,7 @@ export class Train {
         this._name = value;
     }
 
-    get line(): RailLine {
+    get line(): RailLine|undefined {
         return this._line;
     }
 
@@ -39,7 +50,7 @@ export class Train {
         this._line = value;
     }
 
-    get ascendingOrder(): boolean {
+    get ascendingOrder(): boolean|undefined {
         return this._ascendingOrder;
     }
 
@@ -47,7 +58,7 @@ export class Train {
         this._ascendingOrder = value;
     }
 
-    get departure(): Date {
+    get departure(): Date|undefined {
         return this._departure;
     }
 

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NavigationEnd, Router} from "@angular/router";
 import {filter} from "rxjs";
+import {AuthService} from "./shared/services/auth.service";
 
 @Component({
     selector: 'app-root',
@@ -11,7 +12,7 @@ export class AppComponent implements OnInit {
     page = '';
     routes: Array<string> = new Array<string>();
 
-    constructor(private _router: Router) {}
+    constructor(private _router: Router, private _authService: AuthService) {}
 
     ngOnInit() {
         this.routes = this._router.config.map(conf => conf.path) as string[];

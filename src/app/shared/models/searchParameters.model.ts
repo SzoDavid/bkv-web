@@ -1,17 +1,17 @@
 import { Station } from "./station.model";
 
 export class SearchParameters {
-    private _from: Station;
-    private _to: Station;
-    private _date: Date;
+    private _from?: Station;
+    private _to?: Station;
+    private _date?: Date;
 
-    constructor(from: Station, to: Station, date: Date) {
+    constructor(from?: Station, to?: Station, date?: Date) {
         this._from = from;
         this._to = to;
         this._date = date;
     }
 
-    get from(): Station {
+    get from(): Station|undefined {
         return this._from;
     }
 
@@ -19,7 +19,7 @@ export class SearchParameters {
         this._from = value;
     }
 
-    get to(): Station {
+    get to(): Station|undefined {
         return this._to;
     }
 
@@ -27,7 +27,7 @@ export class SearchParameters {
         this._to = value;
     }
 
-    get date(): Date {
+    get date(): Date|undefined {
         return this._date;
     }
 

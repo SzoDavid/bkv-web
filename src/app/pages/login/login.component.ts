@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
+import {AuthService} from "../../shared/services/auth.service";
 
 @Component({
     selector: 'app-login',
@@ -10,8 +11,8 @@ import {Router} from "@angular/router";
 export class LoginComponent {
     loginForm: FormGroup;
 
-    constructor(private _router: Router, private fb: FormBuilder) {
-        this.loginForm = this.fb.group(
+    constructor(private _router: Router, private _fb: FormBuilder, private _authService: AuthService) {
+        this.loginForm = this._fb.group(
             {
                 email: ['', [Validators.required]],
                 password: ['', [Validators.required]]
@@ -25,8 +26,11 @@ export class LoginComponent {
     login() {
         if (this.loginForm.invalid) return;
 
-        if (this.getFieldValue('email') === 'asd@asd.asd' && this.getFieldValue('password') === 'asd') {
+        this._authService.login(this.getFieldValue('email'), this.getFieldValue('password')).then(cred => {
+            console.log(cred);
             this._router.navigateByUrl('/');
-        }
+        }).catch(error => {
+            console.error(error);
+        });
     }
 }
